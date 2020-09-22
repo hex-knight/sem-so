@@ -1,26 +1,59 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+//import Tarea1 from './Components/Tareas/Tarea1';
+import 'antd/dist/antd.css';
+import ModalInfo from './Components/Commons/ModalInfo/ModalInfo';
+import TopBar from './Components/Commons/TopBar/TopBar';
+import Router from './Components/Commons/Router/Router';
 
-function App() {
-  return (
+
+
+class App extends Component{
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       currPage:'',
+       visible: false
+    }
+  }
+
+  closeModal = () =>{
+    this.setState({visible:false})
+  }
+
+  openModal = () =>{
+    this.setState({visible:true})
+  }
+
+  changePage = (pageNo) =>{
+    switch (pageNo) {
+      case 1:
+        window.location="/1"
+        console.log(1);
+        break;
+      case 2:
+        window.location="/2"
+        console.log(2);
+        break;
+      default:
+        break;
+    }
+  }
+  
+
+  render(){
+    const pageNo= window.location!=='/'?window.location.pathname[1]:'1';
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ModalInfo 
+      changePage={this.changePage}
+      visible={this.state.visible} closeModal={this.closeModal} />
+      <TopBar currPage={pageNo} openModal={this.openModal} changePage={this.changePage} />
+      {/* <Tarea1 /> */}
+      <Router/>
     </div>
-  );
+  );}
 }
 
 export default App;

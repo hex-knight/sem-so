@@ -1,0 +1,22 @@
+.info-icon{
+    cursor: pointer;
+}
+
+.topBar {
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    border-bottom: solid 1px #d6d6d6;
+    box-shadow: 0 0 15px 1px rgb(70, 70, 70);
+    color: white;
+    position: fixed;
+    z-index: 5;
+    width: 100vw;
+    min-height: 90px;
+    max-height: 100px;
+    background-color: rgb(255, 255, 255);
+  }
+
+  .bar {
+    height: 90px;
+  }

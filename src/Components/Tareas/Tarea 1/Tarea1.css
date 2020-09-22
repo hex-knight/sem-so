@@ -1,0 +1,37 @@
+
+
+@media (orientation : portrait){
+    .number{
+        max-width: 100%;
+    }
+}
+
+.counter {
+    padding: 10px;
+}
+ 
+ .row {
+    justify-content: center;
+    padding: 1%;
+    margin: auto;
+    align-items: center;
+}
+
+.input {
+    padding: 1%;
+}
+
+.entry {
+    margin: 1%;
+}
+
+.alert{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.error {
+    max-width: fit-content;
+}
+
