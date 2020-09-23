@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import Creador from './Creador';
 import { Spin } from 'antd';
 import Procesador from './Procesador';
-import { sampleLotes } from './Data';
+//import { sampleLotes } from './Data';
 
 
 
@@ -19,8 +19,8 @@ const initialState = {
     id: "",
 }
 
-const dataSource = sampleLotes;
-const timeSource = 15;
+// const dataSource = sampleLotes;
+// const timeSource = 15;
 
 export default class Tarea1 extends Component {
     constructor(props) {
@@ -30,7 +30,7 @@ export default class Tarea1 extends Component {
              lotes: [],
              ids: [],
              totalTime: null,
-             status: "working"
+             status: "adding"
         }
     }
     
@@ -51,8 +51,8 @@ export default class Tarea1 extends Component {
                 return <Spin size="large" />
             case "working":
                 return <Procesador data={{
-                    lotes: dataSource,//this.state.lotes,
-                    totalTime: timeSource//this.state.totalTime
+                    lotes: this.state.lotes,
+                    totalTime: this.state.totalTime
                 }}/>
             default:
                 break;
