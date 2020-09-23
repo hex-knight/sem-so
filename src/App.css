@@ -1,8 +1,5 @@
 .App {
-  text-align: center;
-  min-height: calc(100vh - 60px);
-  background-color: rgb(52, 87, 151);
-  box-shadow: 0 0 15px 5px rgb(24, 24, 24);
+  
 }
 
 .App-logo {
@@ -34,7 +31,7 @@
 @media (orientation : landscape){
   .App-header {
       width: 70%;
-      height: 100vh;
+      min-height: calc( 100vh - 90px );
       background-color: rgb(255, 255, 255);
       margin: auto;
       box-shadow: 0 0 20px 5px rgb(24, 28, 49);
@@ -48,7 +45,7 @@
 @media (orientation : portrait){
   .App-header{
       width: 85%;
-      height: 100vh;
+      min-height: calc( 100vh - 90px );
       background-color: rgb(255, 255, 255);
       margin: auto;
       box-shadow: 0 0 20px 5px rgb(24, 28, 49);

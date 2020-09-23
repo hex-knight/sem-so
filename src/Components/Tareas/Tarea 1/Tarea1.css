@@ -1,14 +1,31 @@
-
-
 @media (orientation : portrait){
     .number{
         max-width: 100%;
+    }
+    .card {
+        background-color: rgb(178, 203, 248);
+        width: 300px;
+        margin: 5px auto;
+        border-radius: 4%;
+        box-shadow: 0 0 5px 3px #a1a1a1;
+    }
+}
+
+@media (orientation : landscape){
+    .card {
+        background-color: rgb(183, 201, 235);
+        width: 250px;
+        margin: 5px auto;
+        border-radius: 4%;
+        box-shadow: 0 0 5px 5px #0a0a0a;
     }
 }
 
 .counter {
     padding: 10px;
 }
+
+
  
  .row {
     justify-content: center;
