@@ -121,7 +121,7 @@ export default class Procesador extends PureComponent {
         var lotesPendientes = this.state.lotesPendientes;
         var procesoActual = this.state.procesoActual;
         
-        var procesosTerminados = this.state.procesosTerminados;
+        //var procesosTerminados = this.state.procesosTerminados;
         if (auxActual === null && lotesPendientes === null && auxActual === null) {
             this.setState({
                 complete: true
