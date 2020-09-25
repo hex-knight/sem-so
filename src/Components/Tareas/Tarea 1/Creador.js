@@ -55,7 +55,7 @@ export default class Creador extends Component {
                     b: this.state.opB
                 },
                 time: this.state.time,
-                lote: this.state.lotes.length
+                lote: Math.floor(this.state.ids.length/4)
             }
             this.saveProcess(process);
             this.clean();
