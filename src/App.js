@@ -51,7 +51,7 @@ class App extends Component{
       visible={this.state.visible} closeModal={this.closeModal} />
       <TopBar currPage={pageNo} openModal={this.openModal} changePage={this.changePage} />
       {/* <Tarea1 /> */}
-      <Router/>
+      <Router />
     </div>
   );}
 }

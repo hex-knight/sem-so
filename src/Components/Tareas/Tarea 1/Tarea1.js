@@ -3,7 +3,7 @@ import './Tarea1.css'
 import 'antd/dist/antd.css';
 
 import Creador from './Creador';
-import { Spin } from 'antd';
+import { Row, Spin } from 'antd';
 import Procesador from './Procesador';
 //import { sampleLotes } from './Data';
 
@@ -19,8 +19,7 @@ const initialState = {
     id: "",
 }
 
-// const dataSource = sampleLotes;
-// const timeSource = 15;
+//const dataSource = sampleLotes;
 
 export default class Tarea1 extends Component {
     constructor(props) {
@@ -36,6 +35,7 @@ export default class Tarea1 extends Component {
     
     setProcesses= response =>{
         this.setState({status:"loading"})
+        console.log(response);
         setTimeout(() => {
             this.setState({
             ...response
@@ -43,14 +43,28 @@ export default class Tarea1 extends Component {
         }, 1500);
     }
 
+    restart = () =>{
+        // this.setState({status:"loading",
+        // ids:[],
+        // lotes:[]})
+        // setTimeout(() => {
+        //     this.setState({
+        //     status:"adding",
+        // })
+        // }, 1500);
+    }
+
     renderWorkflow = status =>{
         switch (status) {
             case "adding":
                 return <Creador initialState={initialState} setProcesses={this.setProcesses} />
             case "loading":
-                return <Spin size="large" />
+                return <Row className="row">
+                    <Spin size="large" />
+                </Row>
             case "working":
-                return <Procesador data={{
+                return <Procesador 
+                data={{
                     lotes: this.state.lotes,
                     totalTime: this.state.totalTime
                 }}/>

@@ -15,6 +15,7 @@ export default class Creador extends Component {
             ids: [],
             totalTime: null,
             status: "working",
+            creating: false,
             ...this.props.initialState
         }
         this.startProcess = this.startProcess.bind(this)
@@ -30,8 +31,17 @@ export default class Creador extends Component {
         return this.state.id !== "" && this.state.dev !== "" &&
             this.state.time !== null && this.state.opA !== null &&
             this.state.opB !== null && this.state.op !== "" &&
-            !this.state.ids.includes(this.state.id);
+            !this.state.ids.includes(this.state.id) && !(
+            this.state.opB === 0 && this.state.op === "3");
     }
+
+    validStart = () =>{
+        return this.state.id === "" && this.state.dev === "" &&
+        this.state.time === null && this.state.opA === null &&
+        this.state.opB === null && this.state.op === "" &&
+        !this.state.ids.includes(this.state.id) && this.state.lotes.length>0;
+    }
+
 
     saveData = () => {
         if (this.valid()) {
@@ -44,7 +54,8 @@ export default class Creador extends Component {
                     a: this.state.opA,
                     b: this.state.opB
                 },
-                time: this.state.time
+                time: this.state.time,
+                lote: this.state.lotes.length
             }
             this.saveProcess(process);
             this.clean();
@@ -95,7 +106,7 @@ export default class Creador extends Component {
             lotes.push(lote)
             ids.push(process.id)
         }
-        this.setState({ lotes, ids, totalTime })
+        this.setState({ lotes, ids, totalTime, creating:false })
     }
 
     startProcess = () => {
@@ -109,8 +120,8 @@ export default class Creador extends Component {
 
     render() {
         return (
-            <div>
-                <Row className="row">
+            <div className="editor">
+                <Row className="row-editor">
                     <Col xs={6} md={4} lg={4} xl={4}
                         className="input">
                         ID del Proceso
@@ -150,7 +161,7 @@ export default class Creador extends Component {
                         />
                     </Col>
                 </Row>
-                <Row className="row">
+                <Row className="row-editor">
                     <Col xs={8} md={12} lg={6} xl={6}
                         className="input">
                         Tiempo Estimado
@@ -163,7 +174,7 @@ export default class Creador extends Component {
                         className="input">
                         <InputNumber className="entry"
                             placeholder="Tiempo max. Estimado..."
-                            min={0}
+                            min={1}
                             onChange={e => {
                                 this.setState({
                                     time: e
@@ -189,6 +200,7 @@ export default class Creador extends Component {
                     <Col xs={4} md={4} lg={6} xl={6}
                         className="input">
                         <Select
+                        defaultActiveFirstOption
                             onChange={value => {
                                 this.setState({
                                     op: value
@@ -206,6 +218,12 @@ export default class Creador extends Component {
                     </Col>
                     <Col xs={6} md={4} lg={6} xl={6}
                         className="input">
+                            <Tooltip title="Operación Inválida"
+                            visible={
+                                this.state.opB === 0 &&
+                                this.state.op === "3"
+                            }
+                        >
                         <InputNumber className="number"
                             placeholder="B"
                             onChange={e => {
@@ -215,12 +233,13 @@ export default class Creador extends Component {
                             }}
                             value={this.state.opB}
                         />
-
+                        </Tooltip>
                     </Col>
                 </Row>
+                
+                <Row className="row-editor">
                 <Divider />
-                <Row className="row">
-                    <Col xs={24} md={12} lg={12} xl={12} >
+                    <Col xs={8} md={8} lg={8} xl={8} >
                         <Button
                             type="secondary"
                             disabled={!this.valid()}
@@ -228,27 +247,25 @@ export default class Creador extends Component {
                         >
                             Agregar Proceso
                         </Button>
-                    </Col>{this.state.ids.length > 0 ? <>
-                        <Col xs={10} md={2} lg={2} xl={2} >
+                    </Col>{this.state.ids.length >= 0 ? <>
+                        <Col xs={4} md={4} lg={4} xl={4} >
                             <div className="counter">
                                 <Badge count={this.state.ids.length}>
                                     <SettingsIcon />
                                 </Badge>
                             </div>
                         </Col>
-                        <Col xs={2} md={1} lg={1} xl={1} >
-                            <Divider type="vertical" />
-                        </Col>
-                        <Col xs={10} md={2} lg={2} xl={2} >
+                        <Col xs={4} md={4} lg={4} xl={4} >
                             <div className="counter">
                                 <Badge count={this.state.lotes.length}>
                                     <AllInboxIcon />
                                 </Badge>
                             </div>
                         </Col>
-                        <Col xs={24} md={7} lg={7} xl={7} >
+                        <Col xs={8} md={8} lg={8} xl={8} >
                             <Button
                                 type="primary"
+                                disabled={!this.validStart()}
                                 onClick={() => this.startProcess()}
                             >
                                 Iniciar
