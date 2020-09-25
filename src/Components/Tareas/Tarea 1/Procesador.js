@@ -140,11 +140,11 @@ export default class Procesador extends PureComponent {
             }, 100);
         }
         else if (auxActual === null && lotesPendientes.length === 0) {
-            procesosTerminados.push(this.getFinishedProcess(procesoActual));
+            //procesosTerminados.push(this.getFinishedProcess(procesoActual));
             procesoActual = null;
             this.setState({
                 procesoActual,
-                procesosTerminados,
+                
                 complete: true
             })
         }
