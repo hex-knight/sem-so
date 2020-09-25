@@ -32,7 +32,8 @@ export default class Creador extends Component {
             this.state.time !== null && this.state.opA !== null &&
             this.state.opB !== null && this.state.op !== "" &&
             !this.state.ids.includes(this.state.id) && !(
-            this.state.opB === 0 && this.state.op === "3");
+            (this.state.opB === 0 && this.state.op === "3")||
+            (this.state.opB === 0 && this.state.op === "5"));
     }
 
     validStart = () =>{
@@ -220,8 +221,10 @@ export default class Creador extends Component {
                         className="input">
                             <Tooltip title="Operación Inválida"
                             visible={
-                                this.state.opB === 0 &&
-                                this.state.op === "3"
+                                (this.state.opB === 0 &&
+                                this.state.op === "3")||
+                                (this.state.opB === 0 &&
+                                    this.state.op === "5")
                             }
                         >
                         <InputNumber className="number"
