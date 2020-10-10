@@ -5,8 +5,12 @@ import React from 'react'
 export default function ModalInfo(props) {
     const data=[
         {
-            key:'1',
-            tarea:'Tarea 1'
+            key:'2',
+            tarea:'Tarea 2'
+        },
+        {
+            key:'4',
+            tarea:'Tarea 4'
         }
     ]
     const columns=[
