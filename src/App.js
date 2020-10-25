@@ -27,18 +27,19 @@ class App extends Component{
   }
 
   changePage = (pageNo) =>{
-    switch (pageNo) {
-      case 2:
-        window.location="/2"
-        console.log(2);
-        break;
-      case 4:
-        window.location="/4"
-        console.log(4);
-        break;
-      default:
-        break;
-    }
+    window.location=`/${pageNo}`
+    // switch (pageNo) {
+    //   case 2:
+    //     window.location="/2"
+    //     console.log(2);
+    //     break;
+    //   case 4:
+    //     window.location="/4"
+    //     console.log(4);
+    //     break;
+    //   default:
+    //     break;
+    //}
   }
   
 
