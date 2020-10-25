@@ -1,6 +1,6 @@
 import { Badge, Card, Col, Descriptions, Divider, List, Progress, Result, Row, Spin, Statistic, Table } from 'antd';
 import React, { PureComponent } from 'react'
-import './Tarea4.css'
+import './Tarea6.css'
 import 'antd/dist/antd.css';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
@@ -15,11 +15,6 @@ const columns = [
     {
         title: 'ID',
         dataIndex: 'id',
-        width: 40
-    },
-    {
-        title: 'L.',
-        dataIndex: 'lote',
         width: 40
     },
     {
@@ -40,16 +35,17 @@ export default class Procesador extends PureComponent {
 
         this.state = {
             //...this.props.data,
-            loteActual: null,
+            listos: [],
             procesoActual: null,
             progresoActual: 0,
             procesosTerminados: [],
             contadorGlobal: 0,
-            lotesPendientes: this.props.data.lotes,
+            nuevos: this.props.data.nuevos,
             begin: false,
             complete: false,
             loading: false,
-            pause: false
+            pause: false,
+            memory: 0
         }
     }
 
@@ -61,7 +57,12 @@ export default class Procesador extends PureComponent {
     }
 
     async startProcesses(){
-        
+        // var memory = this.state.memory;
+        // while(memory < 4){
+        //     this.getLote();
+        //     memory++;
+        // }
+        // this.setState({memory});
         setInterval(() => {
             if(this.state.pause===false){
             var contadorGlobal = this.state.contadorGlobal
@@ -109,104 +110,92 @@ export default class Procesador extends PureComponent {
         }
     }
 
-    wait = (ms, i) => {
-        var d = new Date();
-        var d2 = null;
-        do {  d2 = new Date();}
-        while (d2 - d < ms);
-        return new Promise(i => 
-            { return i+1}); 
-    }
-
-
-
     getLote = () => {
-        var auxLotes = this.state.lotesPendientes;
-        if (auxLotes.length === 0 && this.state.loteActual) {
+        var auxLotes = this.state.nuevos;
+        if (auxLotes.length === 0 && this.state.listos) {
             console.log("Fuck");
             this.setState({
-                lotesPendientes: auxLotes
+                nuevos: auxLotes
             })
-            if (this.state.loteActual.procs.length === 0) {
-                this.setState({ loteActual: null })
+            if (this.state.listos.length === 0) {
+                this.setState({ listos: null })
             }
         } else {
-            var newLote = auxLotes.splice(0, 1)[0];
-            //console.log(newLote)
+            var newLote = auxLotes.splice(0, 1);
+            var listos = this.state.listos;
+            listos.push(newLote);
             this.setState({
-                loteActual: newLote,
-                lotesPendientes: auxLotes
+                listos,
+                nuevos: auxLotes
             })
         }
 
     }
 
     getProces = async () => {
-        var auxActual = this.state.loteActual;
-        var lotesPendientes = this.state.lotesPendientes;
+        var auxActual = this.state.listos;
+        var nuevos = this.state.nuevos;
         var procesoActual = this.state.procesoActual;
         
         //var procesosTerminados = this.state.procesosTerminados;
-        if (auxActual === null && lotesPendientes === null && auxActual === null) {
+        if (auxActual === 0 && nuevos === 0 && auxActual === null) {
             this.setState({
                 complete: true
             })
             return;
         }
-        if (auxActual === null && lotesPendientes.length > 0) {
+        if (auxActual.length === 0 && nuevos.length > 0) {
             this.getLote()
             setTimeout(() => {
-                var auxActual = this.state.loteActual
-                var newProc = auxActual.procs.splice(0, 1)[0];
+                var auxActual = this.state.listos
+                var newProc = auxActual.splice(0, 1);
                 this.setState({
-                    loteActual: auxActual,
+                    listos: auxActual,
                     procesoActual: newProc,
                 })
             }, 100);
         }
-        else if (auxActual === null && lotesPendientes.length === 0) {
+        else if (auxActual === null && nuevos.length === 0) {
             //procesosTerminados.push(this.getFinishedProcess(procesoActual));
             procesoActual = null;
             this.setState({
                 procesoActual,
-                
                 complete: true
             })
         }
-        else if (auxActual.procs.length === 0) {
-            if (lotesPendientes.length === 0) {
+        else if (auxActual.length === 0) {
+            if (nuevos.length === 0) {
                 procesoActual = null;
                 this.setState({
                     procesoActual,
-
-                    loteActual: null
+                    listos: null
                 })
                 this.getLote();
             } else {
                 this.getLote();
                 setTimeout(() => {
-                    var auxActual = this.state.loteActual
-                    var newProc = auxActual.procs.splice(0, 1)[0];
+                    var auxActual = this.state.listos
+                    var newProc = auxActual.splice(0, 1);
                     this.setState({
-                        loteActual: auxActual,
+                        listos: auxActual,
                         procesoActual: newProc,
 
                     })
                 }, 100);
             }
-        } else if (auxActual.procs.length > 0) {
-            var newProc = auxActual.procs.splice(0, 1)[0];
+        } else if (auxActual.length > 0) {
+            var newProc = auxActual.splice(0, 1);
             this.setState({
-                loteActual: auxActual,
+                listos: auxActual,
                 procesoActual: newProc,
 
             })
-            if (auxActual.procs.length === 0) {
-                if (lotesPendientes.length > 0) {
+            if (auxActual.length === 0) {
+                if (nuevos.length > 0) {
                     this.getLote()
                 }
-                else if (lotesPendientes.length === 0) {
-                    this.setState({ loteActual: null })
+                else if (nuevos.length === 0) {
+                    this.setState({ listos: null })
                 }
             }
 
@@ -223,10 +212,10 @@ export default class Procesador extends PureComponent {
             auxActual.time = Math.ceil(auxActual.time-this.state.progresoActual);
             this.setState({ loading: true,
             progresoActual: 0 })
-            var loteActual = this.state.loteActual;
-            loteActual.procs.push(auxActual);
+            var listos = this.state.listos;
+            listos.push(auxActual);
             this.setState({
-                loteActual
+                listos
             })
             this.getProces();
             setTimeout(() => {
@@ -287,21 +276,21 @@ export default class Procesador extends PureComponent {
 
 
 
-    renderLoteActual = () => {
-        const loteActual = this.state.loteActual;
-        const lotesPendientes = this.state.lotesPendientes;
-        const lotes = loteActual !== null && lotesPendientes.length > 0;
+    renderlistos = () => {
+        const listos = this.state.listos;
+        const nuevos = this.state.nuevos;
+        const done = listos !== null && nuevos.length > 0;
         return <Col xs={24} sm={24} md={24} lg={12} xl={12} >
-            { loteActual?
+            { listos?
             <Card hoverable title={
-                loteActual !== null ?
-                    `Lote Actual: ${loteActual.id}` :
-                    `Lotes Finalizados`
+                listos !== null ?
+                    `Procesos Listos: ${listos.id}` :
+                    `Sin procesos`
             }
                 className="card" bordered={false}
                 extra={
                     <Badge count={
-                        lotes !== null ?
+                        done !== null ?
                             <Spin size="small" /> :
                             null}>
                         <AllInboxIcon />
@@ -309,7 +298,7 @@ export default class Procesador extends PureComponent {
                 }
             >
                 <List >
-                        {loteActual.procs.map((process, index) => {
+                        {listos.map((process, index) => {
                             return <Row className="info">
                                  <Col xs={12} sm={12} md={12} lg={12} xl={12} >
                                      <List.Item>
@@ -326,7 +315,7 @@ export default class Procesador extends PureComponent {
                 </List>
             </Card>:
             <Result status="success"
-            title="Lotes Finalizados"
+            title="Sin Procesos Pendientes"
             />    
             }
         </Col>
@@ -354,7 +343,6 @@ export default class Procesador extends PureComponent {
     getFinishedProcess = input => {
         var output = {
             id: input.id,
-            lote: input.lote,
             op: this.renderOp(input.proc, 1),
             res: this.renderOp(input.proc, 2)
         }
@@ -364,7 +352,6 @@ export default class Procesador extends PureComponent {
     getFailedProcess = input => {
         var output = {
             id: input.id,
-            lote: input.lote,
             op: this.renderOp(input.proc, 1),
             res: "ERROR"
         }
@@ -414,7 +401,7 @@ export default class Procesador extends PureComponent {
                         className="info" >
                             <Descriptions size="small" >
                                 <Descriptions.Item label="Op">
-                                    {this.renderOp(procesoActual.proc, 1)}
+                                    {/* {this.renderOp(procesoActual.proc, 1)} */}
                                 </Descriptions.Item>
                             </Descriptions>
                         </Col> :
@@ -467,7 +454,7 @@ export default class Procesador extends PureComponent {
     }
 
     renderMonitor = () => {
-        var lotesPendientes = this.state.lotesPendientes.length
+        var nuevos = this.state.nuevos.length
         var procesoActual = this.state.procesoActual !== null ?
             this.state.procesoActual.id : 0;
         var procesosTerminados = this.state.procesosTerminados.length;
@@ -484,8 +471,8 @@ export default class Procesador extends PureComponent {
                         <Row className="monitor-row">
                             <Col xs={12} sm={12} md={12} lg={12} xl={12}
                                 className="monitor-col">
-                                <Statistic title="L. Pendientes"
-                                    value={lotesPendientes}
+                                <Statistic title="P. Pendientes"
+                                    value={nuevos}
                                     className="monitor-stat"
                                     prefix={<AllInboxIcon />} />
                             </Col>
@@ -525,9 +512,9 @@ export default class Procesador extends PureComponent {
                     {
                         document.addEventListener("keypress", this.logKey)
                     }
-                    {this.state.loteActual ||
+                    {this.state.listos ||
                         this.state.procesosTerminados.length > 0 ? (
-                            this.renderLoteActual()
+                            this.renderlistos()
                         ) :
                         null
                     }
