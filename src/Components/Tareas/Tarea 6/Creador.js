@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
-import './Tarea4.css'
+import './Tarea6.css'
 import 'antd/dist/antd.css';
 import { Button, Col, Row, InputNumber } from 'antd';
+
 
 export default class Creador extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            lotes: [],
+            nuevos: [],
             ids: [],
             totalTime: null,
             status: "working",
@@ -26,9 +27,9 @@ export default class Creador extends Component {
     }
 
     valid = (process) => {
-        return  !this.state.ids.includes(process.id) && !(
-            (process.opB === 0 && process.op === 3)&&
-            (process.opB === 0 && process.op === 5)
+        return  !( this.state.ids.includes(process.id) ||
+            ((process.proc.b === 0 && process.proc.op === 3) ||
+            (process.proc.b === 0 && process.proc.op === 5))
             );
     }
 
@@ -40,23 +41,31 @@ export default class Creador extends Component {
     saveData = () => {
         var i=0;
         let process;
+        const abc = "abcdefghijklmnopqrstuvwxyz"
         while(i< this.state.newProcesses){
             process = {
-                id: this.getRandom(1,100),
+                id: abc[this.getRandom(1,26)]+
+                    abc[this.getRandom(1,26)]+
+                    this.getRandom(1,100),
                 proc: {
                     op:  this.getRandom(1,6),
                     a:  Math.floor(Math.random()*10),
                     b:  Math.floor(Math.random()*10)
                 },
                 time: this.getRandom(7,17),
-                lote: Math.floor(this.state.ids.length/4)
+                blocked: 0,
+                tiempoLlegada: 0,
+                ttrans: 0,
+                tiempoRespuesta: -1
             }
             //console.log(process);
-        if (this.valid(process)) {
-            console.log(process)
+        if (this.valid(process) === true) {
+            //console.log(process)
             this.saveProcess(process);
             i++;
-        } 
+        } else{
+            console.log("Invalid: ",process)
+        }
     }
     this.startProcess();
     }
@@ -64,50 +73,19 @@ export default class Creador extends Component {
 
 
     saveProcess = process => {
-        var lotes = this.state.lotes;
+        var nuevos = this.state.nuevos;
         var ids = this.state.ids
         var totalTime = this.state.totalTime;
-        var lote;
-        var id = 0;
-        if (lotes.length > 0) {
-            while (lotes[id].procs.length >= 4) {
-                id++;
-                if (id >= lotes.length) break;
-            }
-            if (id < lotes.length) {
-                console.log(process)
-                totalTime += process.time;
-                lotes[id].procs.push({
-                    ...process
-                })
-            } else {
-                lote = {
-                    id: id,
-                    procs: []
-                }
-                totalTime += process.time;
-                lotes.push({
-                    id:id,
-                    procs:[process]
-                })
-            }
-            ids.push(process.id)
-        } else {
-            lote = {
-                id: id,
-                procs: []
-            }
-            lote.procs.push(process)
             totalTime += process.time;
-            lotes.push(lote)
+            nuevos.push(process)
             ids.push(process.id)
-        }
-        this.setState({ lotes, ids, totalTime, creating:false })
+        this.setState({ nuevos, ids, totalTime, creating:false })
     }
 
     startProcess = () => {
         const response = {
-            ...this.state,
+            status : this.state.status,
+            nuevos : this.state.nuevos
         }
         this.props.setProcesses(response);
     }
@@ -121,7 +99,7 @@ export default class Creador extends Component {
                 <Col xs={8} md={12} lg={6} xl={6}
                         className="input">
                         <InputNumber className="entry"
-                            placeholder="Número de procesos a crear: "
+                            placeholder="Número de nuevos a crear: "
                             min={1}
                             onChange={e => {
                                 this.setState({
@@ -134,7 +112,7 @@ export default class Creador extends Component {
                     <Col xs={8} md={12} lg={6} xl={6}
                         className="input">
                         <Button onClick={() => this.saveData()} >
-                            Crear procesos
+                            Crear nuevos
                         </Button>
                     </Col>
                 </Row>

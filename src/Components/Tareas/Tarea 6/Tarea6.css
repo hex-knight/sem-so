@@ -35,6 +35,14 @@
         border-radius: 4%;
         box-shadow: 0 0 5px 3px #a1a1a1;
     }
+    .card-info {
+        background-color: rgb(178, 203, 248);
+        width: 900px;
+        height: fit-content;
+        margin: 5px auto;
+        border-radius: 4%;
+        box-shadow: 0 0 5px 3px #a1a1a1;
+    }
     .monitor-card {
         background-color: rgb(178, 203, 248);
         width: 300px;

@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
-import './Tarea1.css'
+import './Tarea6.css'
 import 'antd/dist/antd.css';
 
 import Creador from './Creador';
 import { Row, Spin } from 'antd';
 import Procesador from './Procesador';
-//import { sampleLotes } from './Data';
-
-
-
+//Demo link: https://youtu.be/_F9Vr73z93M
 
 const initialState = {
     dev: "",
@@ -19,14 +16,12 @@ const initialState = {
     id: "",
 }
 
-//const dataSource = sampleLotes;
-
-export default class Tarea1 extends Component {
+export default class Tarea6 extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
-             lotes: [],
+             procesos: [],
              ids: [],
              totalTime: null,
              status: "adding"
@@ -43,17 +38,6 @@ export default class Tarea1 extends Component {
         }, 1500);
     }
 
-    restart = () =>{
-        // this.setState({status:"loading",
-        // ids:[],
-        // lotes:[]})
-        // setTimeout(() => {
-        //     this.setState({
-        //     status:"adding",
-        // })
-        // }, 1500);
-    }
-
     renderWorkflow = status =>{
         switch (status) {
             case "adding":
@@ -65,7 +49,7 @@ export default class Tarea1 extends Component {
             case "working":
                 return <Procesador 
                 data={{
-                    lotes: this.state.lotes,
+                    nuevos: this.state.nuevos,
                     totalTime: this.state.totalTime
                 }}/>
             default:
