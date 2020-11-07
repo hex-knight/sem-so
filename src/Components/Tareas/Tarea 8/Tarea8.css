@@ -1,0 +1,140 @@
+@media (orientation : portrait){
+    .number{
+        max-width: 100%;
+    }
+    .card {
+        background-color: rgb(178, 203, 248);
+        width: 300px;
+        margin: 5px auto;
+        height: 300px;
+        border-radius: 4%;
+        box-shadow: 0 0 5px 3px #a1a1a1;
+    }
+    .monitor-card {
+        background-color: rgb(178, 203, 248);
+        width: 300px;
+        height: 300px;
+        margin: 5px auto;
+        border-radius: 4%;
+        box-shadow: 0 0 5px 3px  #a1a1a1;
+    }
+    .row-editor{
+        justify-content: center;
+    padding: 1%;
+    margin: auto;
+    align-items: center;
+    }
+}
+
+@media (orientation : landscape){
+    .card {
+        background-color: rgb(178, 203, 248);
+        width: 300px;
+        height: 300px;
+        margin: 5px auto;
+        border-radius: 4%;
+        box-shadow: 0 0 5px 3px #a1a1a1;
+    }
+    .card-info {
+        background-color: rgb(178, 203, 248);
+        width: 900px;
+        height: fit-content;
+        margin: 5px auto;
+        border-radius: 4%;
+        box-shadow: 0 0 5px 3px #a1a1a1;
+    }
+    .monitor-card {
+        background-color: rgb(178, 203, 248);
+        width: 300px;
+        height: 300px;
+        margin: 5px auto;
+        border-radius: 4%;
+        box-shadow: 0 0 5px 3px #a1a1a1;
+    }
+    .row-editor{
+        justify-content: center;
+        justify-items: center;
+    padding: 1%;
+    margin: auto;
+    align-items: center;
+    width: 60%;
+    }
+}
+
+.process-done{
+    background-color: whitesmoke;
+    margin: 5% auto;
+    border-radius: 50%;
+}
+
+.counter {
+    padding: 10px;
+}
+
+.monitor-stat{
+    text-align: center;
+    border-radius: 4%;
+    background-color: whitesmoke;
+    max-width: 108px;
+}
+
+.lote-info{
+    background-color: whitesmoke; 
+
+}
+
+.editor{
+    height: 100vh;
+    margin: 20vh auto;
+}
+
+.info{
+    background-color: whitesmoke;
+    margin: 5px auto;
+    padding: 3%;
+    border-radius: 4%;
+}
+
+.monitor-stat:hover{
+    box-shadow: 0 0 5px 3px #88abc3;
+}
+
+.monitor-row {
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+}
+ 
+ .row {
+    justify-content: center;
+    padding: 1%;
+    margin: auto;
+    align-items: center;
+}
+
+.process {
+    text-align: center;
+    justify-content: center; 
+    padding: 1%;
+    margin: auto;
+    align-items: center;
+}
+
+.input {
+    padding: 1%;
+}
+
+.entry {
+    margin: 1%;
+}
+
+.alert{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.error {
+    max-width: fit-content;
+}
+
