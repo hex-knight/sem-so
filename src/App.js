@@ -28,30 +28,17 @@ class App extends Component{
 
   changePage = (pageNo) =>{
     window.location=`/${pageNo}`
-    // switch (pageNo) {
-    //   case 2:
-    //     window.location="/2"
-    //     console.log(2);
-    //     break;
-    //   case 4:
-    //     window.location="/4"
-    //     console.log(4);
-    //     break;
-    //   default:
-    //     break;
-    //}
   }
   
 
   render(){
-    const pageNo= window.location!=='/'?window.location.pathname[1]:'1';
+    const pageNo= window.location!=='/'?this.state.currPage:'1';
     return (
     <div className="App">
       <ModalInfo 
       changePage={this.changePage}
       visible={this.state.visible} closeModal={this.closeModal} />
       <TopBar currPage={pageNo} openModal={this.openModal} changePage={this.changePage} />
-      {/* <Tarea1 /> */}
       <Router />
     </div>
   );}
