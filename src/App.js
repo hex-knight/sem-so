@@ -13,7 +13,6 @@ class App extends Component{
     super(props)
   
     this.state = {
-       currPage:'',
        visible: false
     }
   }
@@ -32,13 +31,12 @@ class App extends Component{
   
 
   render(){
-    const pageNo= window.location!=='/'?this.state.currPage:'1';
     return (
     <div className="App">
       <ModalInfo 
       changePage={this.changePage}
       visible={this.state.visible} closeModal={this.closeModal} />
-      <TopBar currPage={pageNo} openModal={this.openModal} changePage={this.changePage} />
+      <TopBar  openModal={this.openModal} changePage={this.changePage} />
       <Router />
     </div>
   );}

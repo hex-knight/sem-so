@@ -9,8 +9,7 @@ export default function TopBar(props) {
         <div className="topBar">
             <PageHeader
                 ghost={true}
-                //onBack={()=> window.history.back()}
-                title={"Tarea "+props.currPage}
+                title={`Tareas S.S.O.`}
                 subTitle={"David Mariscal - 213548579"}
                 extra={[
                     <InfoOutlinedIcon className="info-icon"

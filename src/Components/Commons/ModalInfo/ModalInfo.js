@@ -23,6 +23,10 @@ export default function ModalInfo(props) {
         {
             key:'10',
             tarea:'Tarea 10'
+        },
+        {
+            key:'12',
+            tarea:'Tarea 12'
         }
     ]
     const columns=[

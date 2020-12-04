@@ -5,11 +5,12 @@ import Tarea4 from '../../Tareas/Tarea 4/Tarea4'
 import Tarea6 from '../../Tareas/Tarea 6/Tarea6'
 import Tarea8 from '../../Tareas/Tarea 8/Tarea8'
 import Tarea10 from '../../Tareas/Tarea 10/Tarea10'
+import Tarea12 from '../../Tareas/Tarea 12/Tarea12'
 
 export default function Router(props) {
     return (
         <div className="App-header">
-            <Route exact path="/" render={()=>{window.location="/10"}} />
+            <Route exact path="/" render={()=>{window.location="/12"}} />
             <Route exact path="/2">
                 <Tarea1 />
             </Route>
@@ -24,6 +25,9 @@ export default function Router(props) {
             </Route>
             <Route exact path="/10">
                 <Tarea10 />
+            </Route>
+            <Route exact path="/12">
+                <Tarea12 />
             </Route>
         </div>
     )
